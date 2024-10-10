@@ -6,10 +6,17 @@ import {
 	FormLabel,
 	Input,
 } from "@chakra-ui/react";
+import { redirect } from "next/navigation";
 
 const Profile = async () => {
 	const userName = await getServerCookie("userName");
 	const jobTitle = await getServerCookie("jobTitle");
+
+	const isSignedIn = !!userName && !!jobTitle;
+
+	if (!isSignedIn) {
+		redirect("/signIn");
+	}
 
 	const handleUpdateProfile = async (formData: FormData) => {
 		"use server";
