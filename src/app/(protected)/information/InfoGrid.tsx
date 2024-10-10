@@ -1,5 +1,6 @@
 import { SimpleGrid, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import AnimeCard from "./AnimeCard";
+import SkeletonCard from "./SkeletonCard";
 import type { AnimeData } from "./types";
 
 const InfoGrid = ({
@@ -21,13 +22,17 @@ const InfoGrid = ({
 				Popular Anime
 			</Text>
 			<SimpleGrid columns={[1, 2, 3, 4]} spacing={8} w="100%">
-				{media.map((anime) => (
-					<AnimeCard
-						key={anime.id}
-						anime={anime}
-						onClick={() => openAnimeOverviewDrawer(anime.id)}
-					/>
-				))}
+				{loading
+					? Array.from({ length: 12 }).map((_, index) => (
+							<SkeletonCard key={`skeleton-${index + 1}`} />
+						))
+					: media.map((anime: AnimeData) => (
+							<AnimeCard
+								key={anime.id}
+								anime={anime}
+								onClick={() => openAnimeOverviewDrawer(anime.id)}
+							/>
+						))}
 			</SimpleGrid>
 		</VStack>
 	);
