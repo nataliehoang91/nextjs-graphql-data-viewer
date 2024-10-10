@@ -1,13 +1,5 @@
-import {
-	Badge,
-	Box,
-	HStack,
-	Image,
-	SimpleGrid,
-	Text,
-	VStack,
-	useColorModeValue,
-} from "@chakra-ui/react";
+import { SimpleGrid, Text, VStack, useColorModeValue } from "@chakra-ui/react";
+import AnimeCard from "./AnimeCard";
 import type { AnimeData } from "./types";
 
 const InfoGrid = ({
@@ -30,9 +22,11 @@ const InfoGrid = ({
 			</Text>
 			<SimpleGrid columns={[1, 2, 3, 4]} spacing={8} w="100%">
 				{media.map((anime) => (
-					<Box key={anime.id} onClick={() => openAnimeOverviewDrawer(anime.id)}>
-						<Image src={anime.coverImage.large} alt={anime.title.romaji} />
-					</Box>
+					<AnimeCard
+						key={anime.id}
+						anime={anime}
+						onClick={() => openAnimeOverviewDrawer(anime.id)}
+					/>
 				))}
 			</SimpleGrid>
 		</VStack>
