@@ -22,11 +22,12 @@ This will start the development server on `http://localhost:3000`.
 
 ## Features
 
-    •	Authentication: Users need to sign in to access the anime list.
-    •	Data Display: The app fetches data from AniList API and displays it with pagination.
-    •	Detail View: Clicking on an anime opens a Drawer showing a brief overview. There is also a link to a detailed page for each item.
-    •	Responsive UI: The app is built using Chakra UI for a clean and responsive user experience.
-    •	Accessibility: Includes features like tab navigation, reduced motion for users who prefer less animation, and a focus on UX/UI best practices.
+- **Authentication:** Users need to sign in to access the anime list.
+- **Data Display:** The app fetches data from AniList API and displays it with pagination.
+- **Detail View:** Clicking on an anime opens a **Drawer** showing a brief overview. There is also a link to a detailed page for each item.
+- **Responsive UI:** The app is built using **Chakra UI** for a clean and responsive user experience.
+- **Dark/Light Mode Toggle:** Users can switch between **dark mode** and **light mode** using the toggle button in the navigation bar. Chakra UI's built-in color mode feature ensures a smooth and visually appealing transition between themes.
+- **Accessibility:** Includes features like tab navigation, reduced motion for users who prefer less animation, and a focus on UX/UI best practices.
 
 ## Technology Stack
 
@@ -43,27 +44,9 @@ This will start the development server on `http://localhost:3000`.
     3.	View Details: Click on a title to view the anime overview in a Drawer. Follow the link in the Drawer for more details.
     4.	Accessibility: The app supports tab navigation and provides an option to reduce motion for a better user experience.
 
-### Development
-
-To start editing the app, modify the files in the src directory. The app will automatically update as you make changes.
-
 ### Deployment
 
-This project is deployed on Vercel. You can deploy your own copy of the project with the following steps:
-
-    1.	Push your code to GitHub or another source control platform.
-    2.	Connect the repository to Vercel.
-    3.	Deploy your Next.js project.
-
-For more details, refer to Vercel’s documentation.
-
-### Accessibility and UI/UX Focus
-
-The project highlights accessibility features such as:
-
-    •	Tab Navigation: Navigate through the app using only the keyboard.
-    •	Reduced Motion: Motion can be reduced for users who prefer less animation.
-    •	Responsive Design: Built using Chakra UI for a seamless experience across devices.
+This project is deployed on Vercel.
 
 ### Future Improvements
 
