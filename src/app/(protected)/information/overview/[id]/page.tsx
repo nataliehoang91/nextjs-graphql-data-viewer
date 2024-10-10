@@ -1,7 +1,15 @@
 "use client";
 
 import { gql, useQuery } from "@apollo/client";
-import { Box } from "@chakra-ui/react";
+import {
+	Box,
+	Drawer,
+	DrawerBody,
+	DrawerCloseButton,
+	DrawerContent,
+	DrawerHeader,
+	DrawerOverlay,
+} from "@chakra-ui/react";
 const GET_ANIME_BY_ID = gql`
   query ($id: Int) {
     Media(id: $id) {
@@ -28,7 +36,18 @@ const OverviewPage = ({ params }: { params: { id: string } }) => {
 	const anime = data?.Media;
 	console.log("hhh", anime?.siteUrl);
 
-	return <Box>{JSON.stringify(anime, null, 2)}</Box>;
+	return (
+		<Drawer isOpen onClose={() => {}}>
+			<DrawerOverlay />
+			<DrawerContent>
+				<DrawerCloseButton />
+				<DrawerHeader>Anime Overview</DrawerHeader>
+				<DrawerBody>
+					<Box>{JSON.stringify(anime, null, 2)}</Box>
+				</DrawerBody>
+			</DrawerContent>
+		</Drawer>
+	);
 };
 
 export default OverviewPage;

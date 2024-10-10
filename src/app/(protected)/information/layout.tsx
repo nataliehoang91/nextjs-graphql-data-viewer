@@ -1,6 +1,7 @@
 import { getServerCookie } from "@/utils/cookiesActions";
 import { Box } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
+import InformationContainer from "./InformationContainer";
 
 const InformationLayout = async ({
 	children,
@@ -13,7 +14,12 @@ const InformationLayout = async ({
 	if (!isSignedIn) {
 		return redirect("/signIn");
 	}
-	return <Box>{children}</Box>;
+	return (
+		<Box>
+			{children}
+			<InformationContainer />
+		</Box>
+	);
 };
 
 export default InformationLayout;
