@@ -1,12 +1,7 @@
+import SubmitButton from "@/components/shared/SubmitButton";
 import UserInfoForm from "@/components/shared/UserInfoForm";
 import { getServerCookie, setServerCookie } from "@/utils/cookiesActions";
-import {
-	Button,
-	Container,
-	FormControl,
-	FormLabel,
-	Input,
-} from "@chakra-ui/react";
+import { Box, Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
 
 const Profile = async () => {
@@ -30,17 +25,35 @@ const Profile = async () => {
 		if (typeof userName !== "string" || typeof jobTitle !== "string") {
 			return;
 		}
-		setServerCookie("userName", newUserName);
-		setServerCookie("jobTitle", newJobTitle);
+		if (newUserName && newJobTitle) {
+			setServerCookie("userName", newUserName.toString());
+			setServerCookie("jobTitle", newJobTitle.toString());
+		}
 	};
 
 	return (
 		<Container maxW="md" py={12}>
-			Profile
-			<form action={handleUpdateProfile}>
-				<UserInfoForm />
-				<Button type="submit">Update Profile</Button>
-			</form>
+			<VStack spacing={8} align="stretch">
+				<Heading as="h1" size="xl" textAlign="center">
+					Your Profile
+				</Heading>
+
+				<Box p={8} boxShadow="lg" borderRadius="lg">
+					<VStack spacing={6}>
+						<Text fontSize="lg" fontWeight="medium">
+							Welcome back, {userName}!
+						</Text>
+						<form action={handleUpdateProfile} style={{ width: "100%" }}>
+							<VStack spacing={6}>
+								<UserInfoForm userName={userName} jobTitle={jobTitle} />
+								<SubmitButton type="submit" width="full">
+									Update Profile
+								</SubmitButton>
+							</VStack>
+						</form>
+					</VStack>
+				</Box>
+			</VStack>
 		</Container>
 	);
 };
