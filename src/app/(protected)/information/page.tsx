@@ -1,9 +1,11 @@
 "use client";
 
+import Pagination from "@/components/common/Pagination";
 import { gql, useQuery } from "@apollo/client";
-import { Box, Container, Image, SimpleGrid } from "@chakra-ui/react";
-import { useSearchParams } from "next/navigation";
+import { Box, Container, Heading, Image, SimpleGrid } from "@chakra-ui/react";
+import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import InfoGrid from "./InfoGrid";
 
 const GET_ANIME_INFORMATION = gql`
   query ($page: Int, $perPage: Int) {
@@ -39,31 +41,51 @@ const InformationPage = () => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const page = Number(searchParams.get("page")) || 1;
+	const params = useParams();
+	const animeId = Number(params.id);
 
-	const { data, loading, error } = useQuery(GET_ANIME_INFORMATION, {
+	const { loading, error, data } = useQuery(GET_ANIME_INFORMATION, {
 		variables: { page, perPage: ITEMS_PER_PAGE },
+		skip: !page,
 	});
 
-	console.log("data", data);
-
-	const handleAnimeClick = (id: number) => {
-		router.push(`/information/overview/${id}`);
+	const handlePageChange = (newPage: number) => {
+		if (newPage <= pageInfo.lastPage && newPage >= 1) {
+			router.push(`/information?page=${newPage}`);
+		}
 	};
 
+	const openAnimeOverviewDrawer = (animeId: number) => {
+		if (animeId) {
+			router.push(`/information/overview/${animeId}?page=${page}`);
+		}
+	};
+
+	if (error) return <p>Error: {error.message}</p>;
+
+	const media = data?.Page?.media || [];
+	const pageInfo = data?.Page?.pageInfo || {};
+
 	return (
-		<Container>
-			<SimpleGrid columns={4} spacing={4}>
-				{data?.Page?.media.map((anime) => (
-					<Box
-						as="button"
-						key={anime.id}
-						onClick={() => handleAnimeClick(anime.id)}
-					>
-						<Image src={anime.coverImage.large} alt={anime.title.romaji} />
-					</Box>
-				))}
-			</SimpleGrid>
-		</Container>
+		<Box minHeight="100vh" py={10}>
+			<Container maxW="container.xl">
+				<Heading as="h1" size="2xl" textAlign="center" mb={10}>
+					Anime Explorer
+				</Heading>
+				<InfoGrid
+					loading={loading}
+					media={media}
+					openAnimeOverviewDrawer={openAnimeOverviewDrawer}
+					infoId={animeId}
+				/>
+				<Pagination
+					onPageChange={handlePageChange}
+					page={page}
+					lastPage={pageInfo.lastPage}
+					loading={loading}
+				/>
+			</Container>
+		</Box>
 	);
 };
 
