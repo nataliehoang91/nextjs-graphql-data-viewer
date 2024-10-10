@@ -1,5 +1,7 @@
 # Next.js GraphQL Data Viewer
 
+![App Screenshot](./src/assets/screenshot.png)
+
 This is a **Next.js** project that fetches and displays data from a public GraphQL API (AniList API). It allows users to search, view, and explore details of anime. The project is built with **Next.js 14**, **TypeScript**, **Apollo Client** for GraphQL queries, and **Chakra UI** for a responsive and accessible user interface.
 
 ## Getting Started
