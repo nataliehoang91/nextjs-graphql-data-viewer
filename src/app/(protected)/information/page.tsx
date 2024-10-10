@@ -1,8 +1,9 @@
 "use client";
 
 import { gql, useQuery } from "@apollo/client";
-import { Box } from "@chakra-ui/react";
+import { Box, Container, Image, SimpleGrid } from "@chakra-ui/react";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const GET_ANIME_INFORMATION = gql`
   query ($page: Int, $perPage: Int) {
@@ -36,6 +37,7 @@ const ITEMS_PER_PAGE = 12;
 
 const InformationPage = () => {
 	const searchParams = useSearchParams();
+	const router = useRouter();
 	const page = Number(searchParams.get("page")) || 1;
 
 	const { data, loading, error } = useQuery(GET_ANIME_INFORMATION, {
@@ -44,7 +46,25 @@ const InformationPage = () => {
 
 	console.log("data", data);
 
-	return <Box>{JSON.stringify(data, null, 2)}</Box>;
+	const handleAnimeClick = (id: number) => {
+		router.push(`/information/overview/${id}`);
+	};
+
+	return (
+		<Container>
+			<SimpleGrid columns={4} spacing={4}>
+				{data?.Page?.media.map((anime) => (
+					<Box
+						as="button"
+						key={anime.id}
+						onClick={() => handleAnimeClick(anime.id)}
+					>
+						<Image src={anime.coverImage.large} alt={anime.title.romaji} />
+					</Box>
+				))}
+			</SimpleGrid>
+		</Container>
+	);
 };
 
 export default InformationPage;
