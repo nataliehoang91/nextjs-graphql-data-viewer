@@ -22,7 +22,7 @@ const UserInfoForm = ({ userName, jobTitle }: UserInfoFormProps) => {
 					title="Username cannot be empty or contain spaces"
 				/>
 			</FormControl>
-			<FormControl>
+			<FormControl isRequired>
 				<FormLabel>Job Title</FormLabel>
 				<Input
 					name="jobTitle"
