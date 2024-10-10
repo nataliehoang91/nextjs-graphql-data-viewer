@@ -3,17 +3,17 @@ import AnimeCard from "./AnimeCard";
 import SkeletonCard from "./SkeletonCard";
 import type { AnimeData } from "./types";
 
+type InfoGridProps = {
+	loading: boolean;
+	media: AnimeData[];
+	openAnimeOverviewDrawer: (animeId: number) => void;
+};
+
 const InfoGrid = ({
 	loading,
 	media,
 	openAnimeOverviewDrawer,
-	infoId,
-}: {
-	loading: boolean;
-	media: AnimeData[];
-	openAnimeOverviewDrawer: (animeId: number) => void;
-	infoId: number;
-}) => {
+}: InfoGridProps) => {
 	const textColor = useColorModeValue("gray.700", "gray.200");
 
 	return (

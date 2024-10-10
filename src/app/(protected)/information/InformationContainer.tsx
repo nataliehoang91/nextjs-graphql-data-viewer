@@ -2,7 +2,7 @@
 
 import Pagination from "@/components/common/Pagination";
 import { gql, useQuery } from "@apollo/client";
-import { Box, Container, Heading, Image, SimpleGrid } from "@chakra-ui/react";
+import { Box, Container, Heading } from "@chakra-ui/react";
 import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import InfoGrid from "./InfoGrid";
@@ -42,7 +42,6 @@ const InformationPage = () => {
 	const router = useRouter();
 	const page = Number(searchParams.get("page")) || 1;
 	const params = useParams();
-	const animeId = Number(params.id);
 
 	const { loading, error, data } = useQuery(GET_ANIME_INFORMATION, {
 		variables: { page, perPage: ITEMS_PER_PAGE },
@@ -76,14 +75,15 @@ const InformationPage = () => {
 					loading={loading}
 					media={media}
 					openAnimeOverviewDrawer={openAnimeOverviewDrawer}
-					infoId={animeId}
 				/>
-				<Pagination
-					onPageChange={handlePageChange}
-					page={page}
-					lastPage={pageInfo.lastPage}
-					loading={loading}
-				/>
+				<Box mt={10}>
+					<Pagination
+						page={page}
+						lastPage={pageInfo.lastPage}
+						loading={loading}
+						onPageChange={handlePageChange}
+					/>
+				</Box>
 			</Container>
 		</Box>
 	);

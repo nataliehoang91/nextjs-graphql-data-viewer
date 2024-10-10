@@ -1,33 +1,64 @@
-import page from "@/app/page";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
-	Text,
 } from "@chakra-ui/icons";
-import { Button } from "@chakra-ui/react";
+import { Box, Button, HStack, Text } from "@chakra-ui/react";
+
+type PaginationProps = {
+	page: number;
+	lastPage: number;
+	loading: boolean;
+	onPageChange: (newPage: number) => void;
+};
 
 const Pagination = ({
-	onPageChange,
 	page,
 	lastPage,
 	loading,
-}: {
-	onPageChange: (page: number) => void;
-	page: number;
-	lastPage: number;
-}) => {
+	onPageChange,
+}: PaginationProps) => {
 	return (
-		<div>
-			<Button onClick={() => onPageChange(1)} />
-			<Button onClick={() => onPageChange(page - 1)} />
-			<Text fontWeight="medium" aria-live="polite" aria-atomic="true">
-				Page {page} of {lastPage || "..."}
-			</Text>
-			<Button onClick={() => onPageChange(page + 1)} />
-			<Button onClick={() => onPageChange(lastPage)} />
-		</div>
+		<Box aria-label="Pagination">
+			<HStack spacing={2} justifyContent="center">
+				<Button
+					onClick={() => onPageChange(1)}
+					isDisabled={page === 1 || loading}
+					size="sm"
+					colorScheme="teal"
+					leftIcon={<ArrowLeftIcon />}
+					aria-label="Go to first page"
+				/>
+				<Button
+					onClick={() => onPageChange(page - 1)}
+					isDisabled={page === 1 || loading}
+					size="sm"
+					colorScheme="teal"
+					leftIcon={<ChevronLeftIcon boxSize={8} />}
+					aria-label="Go to previous page"
+				/>
+				<Text fontWeight="medium" aria-live="polite" aria-atomic="true">
+					Page {page} of {lastPage || "..."}
+				</Text>
+				<Button
+					onClick={() => onPageChange(page + 1)}
+					isDisabled={page >= lastPage || loading}
+					size="sm"
+					colorScheme="teal"
+					rightIcon={<ChevronRightIcon boxSize={8} />}
+					aria-label="Go to next page"
+				/>
+				<Button
+					onClick={() => onPageChange(lastPage)}
+					isDisabled={page === lastPage || loading}
+					size="sm"
+					colorScheme="teal"
+					rightIcon={<ArrowRightIcon />}
+					aria-label="Go to last page"
+				/>
+			</HStack>
+		</Box>
 	);
 };
 

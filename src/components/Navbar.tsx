@@ -17,7 +17,7 @@ import {
 	useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import ColorModeToggle from "./common/ColorModeToggle";
 
 type NavbarProps = {
@@ -26,10 +26,11 @@ type NavbarProps = {
 	jobTitle: string;
 };
 const Navbar = ({ isSignedIn, userName, jobTitle }: NavbarProps) => {
+	const router = useRouter();
 	const handleSignOut = async () => {
 		await deleteServerCookie("userName");
 		await deleteServerCookie("jobTitle");
-		redirect("/");
+		router.push("/");
 	};
 
 	const bgColor = useColorModeValue(

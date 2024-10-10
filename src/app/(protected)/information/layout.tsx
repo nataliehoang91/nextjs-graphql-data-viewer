@@ -8,11 +8,12 @@ const InformationLayout = async ({
 }: { children: React.ReactNode }) => {
 	const userName = await getServerCookie("userName");
 	const jobTitle = await getServerCookie("jobTitle");
+	const currentUrl = "/information";
 
 	const isSignedIn = !!userName && !!jobTitle;
 
 	if (!isSignedIn) {
-		return redirect("/signIn");
+		return redirect(`/signIn?redirect=${encodeURIComponent(currentUrl)}`);
 	}
 	return (
 		<Box>

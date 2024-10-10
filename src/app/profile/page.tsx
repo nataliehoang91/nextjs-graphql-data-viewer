@@ -1,10 +1,24 @@
 import SubmitButton from "@/components/shared/SubmitButton";
 import UserInfoForm from "@/components/shared/UserInfoForm";
 import { getServerCookie, setServerCookie } from "@/utils/cookiesActions";
-import { Box, Container, Heading, Text, VStack } from "@chakra-ui/react";
+import {
+	Alert,
+	AlertDescription,
+	AlertIcon,
+	Box,
+	Container,
+	Heading,
+	Text,
+	VStack,
+} from "@chakra-ui/react";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-const Profile = async () => {
+const Profile = async ({
+	searchParams,
+}: {
+	searchParams: { updated: string; error: string };
+}) => {
 	const userName = await getServerCookie("userName");
 	const jobTitle = await getServerCookie("jobTitle");
 
@@ -28,7 +42,10 @@ const Profile = async () => {
 		if (newUserName && newJobTitle) {
 			setServerCookie("userName", newUserName.toString());
 			setServerCookie("jobTitle", newJobTitle.toString());
+			revalidatePath("/profile");
+			redirect("/profile?updated=true");
 		}
+		return redirect("/profile?error=true");
 	};
 
 	return (
@@ -37,7 +54,22 @@ const Profile = async () => {
 				<Heading as="h1" size="xl" textAlign="center">
 					Your Profile
 				</Heading>
-
+				{searchParams.updated === "true" && (
+					<Alert status="success">
+						<AlertIcon />
+						<AlertDescription>
+							Your profile has been updated successfully.
+						</AlertDescription>
+					</Alert>
+				)}
+				{searchParams.error === "true" && (
+					<Alert status="error">
+						<AlertIcon />
+						<AlertDescription>
+							Please provide a valid username.
+						</AlertDescription>
+					</Alert>
+				)}
 				<Box p={8} boxShadow="lg" borderRadius="lg">
 					<VStack spacing={6}>
 						<Text fontSize="lg" fontWeight="medium">
