@@ -1,3 +1,4 @@
+import UserInfoForm from "@/components/shared/UserInfoForm";
 import { setServerCookie } from "@/utils/cookiesActions";
 import {
 	Button,
@@ -33,14 +34,7 @@ const SignIn = async () => {
 				Sign In
 			</Heading>
 			<form action={handleSignIn}>
-				<FormControl>
-					<FormLabel>Username</FormLabel>
-					<Input name="userName" type="text" />
-				</FormControl>
-				<FormControl>
-					<FormLabel>Job title</FormLabel>
-					<Input name="jobTitle" type="text" />
-				</FormControl>
+				<UserInfoForm />
 				<Button type="submit">Sign In</Button>
 			</form>
 		</Container>

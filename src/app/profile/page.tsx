@@ -1,3 +1,4 @@
+import UserInfoForm from "@/components/shared/UserInfoForm";
 import { getServerCookie, setServerCookie } from "@/utils/cookiesActions";
 import {
 	Button,
@@ -37,14 +38,7 @@ const Profile = async () => {
 		<Container maxW="md" py={12}>
 			Profile
 			<form action={handleUpdateProfile}>
-				<FormControl>
-					<FormLabel>Username</FormLabel>
-					<Input name="userName" type="text" defaultValue={userName} />
-				</FormControl>
-				<FormControl>
-					<FormLabel>Job Title</FormLabel>
-					<Input name="jobTitle" type="text" defaultValue={jobTitle} />
-				</FormControl>
+				<UserInfoForm />
 				<Button type="submit">Update Profile</Button>
 			</form>
 		</Container>
